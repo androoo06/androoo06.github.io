@@ -10,7 +10,7 @@ var _sprites = {
 };
 
 _sprites.Idle.src         = "sprites/Person.png";
-_sprites.Idle.crossOrigin = true
+_sprites.Idle.crossOrigin = true;
 _sprites.Idle.onload = function() {
     context.drawImage(
         image,
