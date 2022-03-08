@@ -14,7 +14,7 @@ sprites.Idle.addEventListener("load", function(){
 });
 */
 
-console.log("t");
+console.log("t_");
 
 var s = document.getElementById("player$idle");
 
