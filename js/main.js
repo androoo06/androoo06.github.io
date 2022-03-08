@@ -1,24 +1,29 @@
 // main file hopefully
-
 var moving   = false;
-
-var canvas   = document.getElementById("$canvas");
-var context  = canvas.getContext("2d");
 
 var sprites  = {};
 sprites.Idle = document.getElementById("player$idle");
 
-sprites.Idle.addEventListener("load", function(){
-    context.drawImage(sprites.Idle, 128, 128);
-});
-
 function moveSprite(event) {
-    var key = event.key;
-    if (key != "a" && key != "d") {
-        alert(">" + key + "<");
-        return;
-    }
+  var key = event.key;
+  if (key != "a" && key != "d" && key != " ") {
+    return;
+  }
 
+/*
+  var p = 0;
+  var m = setInterval(function () {
+    p++;
+    sprites.Idle.style.left = p + "px";
+    if (pos == 200){
+      clearInterval(m);
+    }
+  }, 25);
+*/
+
+  sprites.Idle.style.left = "3000px";
+
+  alert('vv');
 
 }
 
