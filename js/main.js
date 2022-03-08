@@ -6,8 +6,12 @@ var canvas  = document.getElementById('$canvas');
 var context = canvas.getContext('2d');
 
 var sprites = {
-    Idle = document.getElementById("player$idle"),
+    Idle = document.getElementById("player$idle")
 };
+
+sprites.Idle.onload = function() {
+    canvas.drawImage(sprites.Idle, 128, 128);
+}
 
 function moveSprite(event) {
     var key = event.key;
