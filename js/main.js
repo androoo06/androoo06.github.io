@@ -5,16 +5,19 @@ var moving   = false;
 var canvas   = document.getElementById("$canvas");
 var context  = canvas.getContext("2d");
 
+/*
 var sprites  = {};
 sprites.Idle = document.getElementById("player$idle");
 
-sprites.Idle.addEventListener('load', function(){
-    //
-}, false);
+sprites.Idle.addEventListener("load", function(){
+    context.drawImage(sprites.Idle, 128, 128);
+});
+*/
 
-canvas.addEventListener('mouseenter', function(){
-    alert("hello");
-}, false);
+var s = document.getElementById("player$idle");
+s.addEventListener("mouseenter", function(){
+    alert("A");
+});
 
 function moveSprite(event) {
     var key = event.key;
