@@ -5,13 +5,13 @@ var moving  = false;
 var canvas  = document.querySelector('canvas');
 var context = canvas.getContext('2d');
 
-var sprites = {
+var _sprites = {
     Idle = new Image(128, 128),
 };
 
-sprites.Idle.src         = "sprites/Person.png";
-sprites.Idle.crossOrigin = true
-sprites.Idle.onload = function() {
+_sprites.Idle.src         = "sprites/Person.png";
+_sprites.Idle.crossOrigin = true
+_sprites.Idle.onload = function() {
     context.drawImage(
         image,
         0,
@@ -28,10 +28,10 @@ sprites.Idle.onload = function() {
 
 function moveSprite(event) {
     var key = event.key;
-    if (key != 'w' && key != 'a' && key == 's' && key != 'd'){
+    if (key != 'a' && key != 'd'){
+        alert(key);
         return;
     }
-
 
 
 }
