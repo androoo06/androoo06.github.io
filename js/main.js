@@ -1,13 +1,12 @@
 // main file hopefully
 
-var moving  = false;
+var moving   = false;
 
-var canvas  = document.getElementById('$canvas');
-var context = canvas.getContext('2d');
+var canvas   = document.getElementById('$canvas');
+var context  = canvas.getContext('2d');
 
-var sprites = {
-    Idle = document.getElementById("player$idle")
-};
+var sprites  = {};
+sprites.Idle = document.getElementById("player$idle");
 
 sprites.Idle.onload = function() {
     canvas.drawImage(sprites.Idle, 128, 128);
