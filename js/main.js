@@ -2,7 +2,7 @@
 
 var moving  = false;
 
-var canvas  = document.querySelector('canvas');
+var canvas  = document.getElementById('$canvas');
 var context = canvas.getContext('2d');
 
 var _sprites = {
