@@ -14,10 +14,17 @@ sprites.Idle.addEventListener("load", function(){
 });
 */
 
+console.log("t");
+
 var s = document.getElementById("player$idle");
-s.addEventListener("mouseenter", function(){
+
+console.log("t");
+
+s.addEventListener("mouseenter", function() {
     alert("A");
-});
+}, false);
+
+console.log("t");
 
 function moveSprite(event) {
     var key = event.key;
@@ -28,5 +35,7 @@ function moveSprite(event) {
 
 
 }
+
+console.log("t");
 
 document.addEventListener('keydown', moveSprite);
