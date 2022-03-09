@@ -29,9 +29,9 @@ function getNextSprite(curr) {
     var walkNum    = parseInt(current.substring(12));
     if (!isNaN(walkNum)) {
         cycleDir = (walkNum == 0) ?  1 : cycleDir;
-        cycleDir = (walkNum == 4) ? -1 : cycleDir;
+        cycleDir = (walkNum == 3) ? -1 : cycleDir;
 
-        var newWalk  = (walkNum + cycleDir) % 4;
+        var newWalk  = (walkNum + cycleDir);
 
         console.log(newWalk);
 
