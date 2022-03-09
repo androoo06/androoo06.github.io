@@ -29,8 +29,6 @@ function getNextSprite(curr) {
 }
 
 export function moveSprite(event) {
-  alert('hello');
-
   var key = event.key;
   if ((key != "a" && key != "d" && key != " ")) {
     return;
@@ -72,7 +70,8 @@ export function stopSprite(event) {
   player.src = "sprites/Idle.png";
 }
 
+/*
 module.exports = {
   "moveSprite":moveSprite,
   "stopSprite":stopSprite
-};
+};*/
