@@ -6,19 +6,31 @@ var dirs      = {
 }
 
 var intervals = [];
+var ckd       = null; // current key down
+
+var pDim      = 64
 
 var pLeft     = 0;
 var pTop      = 0;
 
-var duration  = 0; //useDiration for how long the current sprite image has been used
+var duration  = 0; //useDuration for how long the current sprite player has been used
 var cycleDir  = 1;
 
 var leftWall  = 0;
-var rightWall = 500;
+var rightWall = 1000;
 
-export var player = document.getElementById("$player$");
+var canvas    = document.getElementById("canvas");
+var ctx       = canvas.getContext("2d");
 
-function getNextSprite(curr) {
+export var player = new Image(); //document.getElementById("$player$");
+player.src        = "sprites/Idle.png";
+
+player.addEventListener("load", function(){
+    ctx.drawImage(player, pLeft, pTop, pDim, pDim);
+});
+
+function getNextSprite() {
+    var curr        = player.src;
     var _curr       = curr.search("sprites/");
     var current     = curr.substring(_curr);
 
@@ -39,44 +51,43 @@ function getNextSprite(curr) {
     }
 }
 
-export function moveSprite(event) {
-    var key = event.key;
-    if ((key != "a" && key != "d" && key != " ")) {
-        return;
-    }
-    if (intervals.length > 0){
-        return;
-    }
+export function moveSprite(event){
+    if (ckd) return;
+    ckd = event.key;
 
-    var leftInc = dirs[key];
+    if (intervals.length > 0) return;
+
+    var inc = dirs[ckd];
+    if (!inc) {
+        ckd = null;
+        return;
+    }
 
     var m = setInterval(function () {
-        var newLoc = pLeft + (leftInc*2);
-        duration++;
+        var _new = pLeft + (inc*2);
 
-        if ((newLoc < rightWall) && (newLoc > leftWall)) {
-            player.style.left = newLoc + "px";
-            pLeft = newLoc;
+        //if (boundsCheck(new)) then:
+        pLeft = _new;
+        //else: stopSprite(event);
 
-            if (duration % 14 == 0){
-                player.src = getNextSprite(player.src);
-            }
-        }
-    }, 10);
+        canvas.width = canvas.width;
 
-    intervals.push(m); // add to intervals
+        player.src = getNextSprite();
+
+        ctx.drawImage(player, pLeft, pTop, pDim, pDim);
+
+
+    }, 20);
+
+    intervals.push(m);
 }
 
-export function stopSprite(event) {
-    var key = event.key;
-    if (key != "a" && key != "d" && key != " ") {
-        return;
+export function stopSprite(event){
+    if (event.key == ckd){
+        for (var i=intervals.length-1; i>-1; i--){
+            clearInterval(intervals[i]);
+            intervals.pop();
+        }
+        ckd = null;
     }
-
-    for (var i = (intervals.length-1); i>-1; i--){
-        clearInterval(intervals[i]);
-        intervals.pop();
-    }
-
-    player.src = "sprites/Idle.png";
 }
