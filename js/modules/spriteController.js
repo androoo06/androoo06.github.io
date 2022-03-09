@@ -27,7 +27,7 @@ function getNextSprite(curr) {
 
     var walkNum    = parseInt(current.substring(12));
     console.log(current.substring(12) + "  " + walkNum);
-    if (walkNum) {
+    if (!isNaN(walkNum)) {
         var newWalk  = (walkNum+1) % 4;
         console.log(newWalk);
         return "sprites/walk"+ (newWalk) +".jpg";
