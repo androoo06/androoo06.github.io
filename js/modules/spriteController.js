@@ -28,7 +28,7 @@ function getNextSprite(curr) {
   }
 }
 
-function moveSprite(event) {
+export function moveSprite(event) {
   alert('hello');
 
   var key = event.key;
@@ -58,7 +58,7 @@ function moveSprite(event) {
   intervals.push(m); // add to intervals
 }
 
-function stopSprite(event) {
+export function stopSprite(event) {
   var key = event.key;
   if (key != "a" && key != "d" && key != " ") {
     return;
