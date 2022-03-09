@@ -11,6 +11,7 @@ var pLeft     = 0;
 var pTop      = 0;
 
 var duration  = 0; //useDiration for how long the current sprite image has been used
+var cycleDir  = 1;
 
 var leftWall  = 0;
 var rightWall = 500;
@@ -26,10 +27,14 @@ function getNextSprite(curr) {
     }
 
     var walkNum    = parseInt(current.substring(12));
-    console.log(current.substring(12) + "  " + walkNum);
     if (!isNaN(walkNum)) {
-        var newWalk  = (walkNum+1) % 4;
+        cycleDir = (walkNum == 0) ?  1 : cycleDir;
+        cycleDir = (walkNum == 4) ? -1 : cycleDir;
+
+        var newWalk  = (walkNum + cycleDir) % 4;
+
         console.log(newWalk);
+
         return "sprites/walk"+ (newWalk) +".jpg";
     }
 }
