@@ -1,5 +1,7 @@
 // Sprite Controller
 
+import * as MAP from "./collisionMap.js";
+
 var dirs      = {
   "a": -1,
   "d": 1
@@ -67,15 +69,12 @@ export function moveSprite(event){
         var _new = pLeft + (inc*2);
 
         //if (boundsCheck(new)) then:
-        pLeft = _new;
+            pLeft = _new;
         //else: stopSprite(event);
 
         canvas.width = canvas.width;
-
-        player.src = getNextSprite();
-
+        player.src   = getNextSprite();
         ctx.drawImage(player, pLeft, pTop, pDim, pDim);
-
 
     }, 20);
 
@@ -89,5 +88,6 @@ export function stopSprite(event){
             intervals.pop();
         }
         ckd = null;
+        player.src = "sprites/Idle.png";
     }
 }
