@@ -20,6 +20,8 @@ player.addEventListener("load", updateCanvas);
 var dirs      = {
   "a": -1,
   "d":  1
+  "ArrowRight": 1
+  "ArrowLeft": -1
 }
 var moving    = {};
 var interval  = null;
