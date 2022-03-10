@@ -4,8 +4,8 @@
 import {boundsCheck} from "./collisionMap.js";
 
 // canvas stuff
-var canvas = document.getElementById("canvas");
-var ctx    = canvas.getContext("2d");
+export var canvas = document.getElementById("canvas");
+export var ctx    = canvas.getContext("2d");
 
 // player stuff
 var pDim      = 64; // image size (in the canvas, png should be 200x200)
@@ -101,7 +101,7 @@ function jump() {
             jumpDir = jumps.down;
         }
 
-        if (pY == ogY){
+        if (jumpDir == 0){
             clearInterval(interval);
             jumpDir = 0;
             player.src = "sprites/Idle.png";
