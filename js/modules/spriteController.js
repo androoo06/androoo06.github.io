@@ -2,10 +2,7 @@
 
 // imports
 import {boundsCheck} from "./collisionMap.js";
-
-// canvas stuff
-export var canvas = document.getElementById("canvas");
-export var ctx    = canvas.getContext("2d");
+import {canvas, ctx} from "./constants.js";
 
 // player stuff
 var pDim      = 64; // image size (in the canvas, png should be 200x200)

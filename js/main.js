@@ -1,12 +1,9 @@
 ////  MAIN  ////
 
 // imports
-import * as sprites from "./modules/spriteController.js";
-import * as MAP     from "./modules/collisionMap.js";
-
-// canvas stuff
-var canvas = document.getElementById("canvas");
-var ctx    = canvas.getContext("2d");
+import * as sprites  from "./modules/spriteController.js";
+import * as MAP      from "./modules/collisionMap.js";
+import {canvas, ctx} from "./modules/constants.js";
 
 // events
 document.addEventListener('keyup',   sprites.stopSprite);

@@ -1,9 +1,6 @@
 ////  Entity Class  ////
 
-// canvas stuff
-//var canvas = document.getElementById("canvas");
-//var ctx    = canvas.getContext("2d");
-import {canvas, ctx} from "./spriteController.js";
+import {canvas, ctx} from "./constants.js";
 
 // didn't work as a private or public method of the class so I had to pull it out altogether.
 function drawBoundsBox(entity, onlyBB) {
