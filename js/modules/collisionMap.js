@@ -1,6 +1,6 @@
 ////  Collision Map  ////
 
-import {entity} from "./entity.js";
+import Entity as entity from "./entity.js";
 
 // canvas stuff [defined like this in all scripts thus far]
 var canvas  = document.getElementById("canvas");
