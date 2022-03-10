@@ -64,7 +64,7 @@ function move(incX) {
         if (bound) {
             // maybe do something with bound (but prob not)
             pX = newX;
-            player.src = getNextSprite();
+            player.src = (jumpDir) ? player.src : getNextSprite();
             updateCanvas();
         } else {
             stopSprite(event);
@@ -88,11 +88,16 @@ function jump() {
             jumpDir = (jumpDir == -1) ? 1 : 0;
         }
 
-        if (pY > (ogY + maxJump)){
-            clearInterval(interval);
+        if (pY < (ogY - maxJump)){
+            jumpDir = 1;
             player.src = "sprites/Idle.png";
         }
-    }
+
+        if (pY == ogY){
+            clearInterval(interval);
+            jumpDir = 0;
+        }
+    }, 20);
 }
 
 export function moveSprite(event) {
