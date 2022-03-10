@@ -74,7 +74,7 @@ export function moveSprite(event) {
         var newX = pX + (incX*2);
         var newY = pY + (incY*2);
 
-        var a = boundsCheck(newX, newY);
+        var a = MAP.boundsCheck(newX, newY);
         alert(a);
         if (a) {
             pX = newX;
