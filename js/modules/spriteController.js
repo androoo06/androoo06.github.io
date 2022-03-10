@@ -21,11 +21,12 @@ var dirs      = {
   "a": -1,
   "d":  1
 }
-var intervals = [];
-var ckd       = null; // current key down
+var moving    = {};
+var interval  = null;
 var cycleDir  = 1;
 var jumpDir   = 0;
 var maxJump   = 50;
+var moveX_inc = 0;
 
 function updateCanvas(){
     canvas.width = canvas.width; // ngl idk what this does but it bugs without it
@@ -56,11 +57,13 @@ function getNextSprite() {
     }
 }
 
-function move(incX) {
+function move(event) {
     return setInterval(function() {
-        var newX = pX + (incX*2);
+        console.log("moveX_inc:"+moveX_inc);
 
+        var newX  = pX + moveX_inc;
         var bound = MAP.boundsCheck(newX, pY);
+
         if (bound) {
             // maybe do something with bound (but prob not)
             pX = newX;
@@ -101,31 +104,36 @@ function jump() {
 }
 
 export function moveSprite(event) {
-    if (ckd) return;
-    if (intervals.length > 0) return;
+    var key = event.key;
 
-    ckd      = event.key;
-    var incX = dirs[ckd];
-    if (!incX) {
-        ckd = null;
-    }
-    if (event.key === " ") {
+    if (key == " ") {
         if (jumpDir) return;
         jump();      return;
     }
 
-    var m = move(incX);
-    intervals.push(m);
+    if (moving[key]) return;
+    if (!dirs[key])  return;
+
+    moving[key] = true;
+    moveX_inc += (dirs[key]*2);
+
+    if (!interval){
+        interval = move(event);
+    }
 }
 
 export function stopSprite(event){
-    if (event.key == ckd){
-        ckd = null;
+    var key = event.key;
+    var inc = moving[key];
 
-        for (var i=intervals.length-1; i>-1; i--){
-            clearInterval(intervals[i]);
-            intervals.pop();
-        }
+    if (inc) {
+        moving[key] = null;
+        moveX_inc  -= (dirs[key]*2);
+    }
+
+    if (moveX_inc == 0){
+        clearInterval(interval);
+        interval   = null;
 
         player.src = "sprites/Idle.png";
         updateCanvas();
