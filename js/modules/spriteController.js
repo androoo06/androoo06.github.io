@@ -2,15 +2,15 @@
 
 // imports
 import {boundsCheck} from "./collisionMap.js";
-import {canvas, ctx} from "./constants.js";
+import {canvas, ctx, player, plrDim as pDim} from "./constants.js";
+import {_entities as objs} from "./dailyEntities.js";
 
 // player stuff
-var pDim      = 64; // image size (in the canvas, png should be 200x200)
 var pX        = 0;
 var pY        = canvas.height - pDim;
 
-export var player = new Image();
-player.src        = "sprites/Idle.png";
+var prevX     = pX;
+var prevY     = pY;
 player.addEventListener("load", updateCanvas);
 
 // misc
@@ -32,7 +32,9 @@ var jumpDir   = 0;
 var maxJump   = 50; // max jump height
 
 function updateCanvas(){
-    canvas.width = canvas.width; // ngl idk what this does but it bugs without it
+    ctx.clearRect(prevX, prevY, pDim, pDim);
+    ctx.clearRect(pX, pY, pDim, pDim);
+
     ctx.drawImage(player, pX, pY, pDim, pDim);
 }
 
@@ -62,20 +64,20 @@ function getNextSprite() {
 
 function move(event) {
     return setInterval(function() {
-        console.log("moveX_inc:"+moveX_inc);
+        //console.log("moveX_inc:"+moveX_inc);
 
         var newX  = pX + moveX_inc;
-        var bound = boundsCheck(newX, pY);
+        var bound = boundsCheck(newX, pY, pDim, pDim);
 
         if (bound) {
-            // maybe do something with bound (but prob not)
-            pX = newX;
+            prevX = pX;
+            pX    = newX;
             player.src = (jumpDir != 0) ? player.src : ( (moveX_inc == 0) ? "sprites/Idle.png" : getNextSprite() ); // nested ternary; kinda gross (just saying to not change if jumping, and set to idle if moveInc is 0)
             updateCanvas();
         } else {
             stopSprite(event);
         }
-    }, 20);
+    }, 15);
 }
 
 function jump() {
@@ -86,9 +88,10 @@ function jump() {
     var interval = setInterval(function() {
         var newY = pY + (jumpDir*2);
 
-        var bound = boundsCheck(newY, pX);
+        var bound = boundsCheck(newY, pX, pDim, pDim);
         if (bound) {
-            pY = newY;
+            prevY = pY;
+            pY    = newY;
             updateCanvas();
         } else {
             jumpDir = (jumpDir == jumps.up) ? jumps.down : 0;
