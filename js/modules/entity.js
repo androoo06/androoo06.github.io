@@ -1,6 +1,15 @@
 export class Entity {
-    // private method to update this.boundsBox when properties are changed
-    #drawBoundsBox() {
+    constructor(width, height, x, y) {
+        this.pX        = x;
+        this.pY        = y;
+        this.width     = width;
+        this.height    = height;
+
+        drawBoundsBox();
+    }
+
+    // tried making private but didn't work (doesnt rly matter much either way in this case)
+    drawBoundsBox() {
         // leftBound, rightBound, bottomBound, topBound
         this.boundsBox = {
             "left":    this.pX,
@@ -8,15 +17,6 @@ export class Entity {
             "bottom": (this.pY + this.height),
             "top":     this.pY
         };
-    }
-
-    constructor(width, height, x, y) {
-        this.pX        = x;
-        this.pY        = y;
-        this.width     = width;
-        this.height    = height;
-
-        this.#drawBoundsBox();
     }
 
     // return whether (x, y) is in object bounds (would cause overlap)
@@ -29,13 +29,13 @@ export class Entity {
     shift(newX, newY) {
         this.pX = newX;
         this.pY = newY;
-        this.#drawBoundsBox();
+        drawBoundsBox();
     }
 
     // change size to (width, height)
     resize(width, height) {
         this.width  = width;
         this.height = height;
-        this.#drawBoundsBox();
+        drawBoundsBox();
     }
 }
