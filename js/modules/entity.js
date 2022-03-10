@@ -9,9 +9,9 @@ export class Entity {
     }
 
     // private method to update this.boundsBox when properties are changed
-    #drawBoundsBox(x, y) {
+    #drawBoundsBox() {
         // leftBound, rightBound, bottomBound, topBound
-        this.boundsBox = [pX, pX+width, pY+height, pY];
+        this.boundsBox = [this.pX, (this.pX + this.width), (this.pY + this.height), this.pY];
     }
 
     // return whether (x, y) is in object bounds (would cause overlap)
