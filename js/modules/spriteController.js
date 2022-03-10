@@ -8,7 +8,7 @@ var canvas = document.getElementById("canvas");
 var ctx    = canvas.getContext("2d");
 
 // player stuff
-var pDim      = 64 // image size (in the canvas, png should be 200x200)
+var pDim      = 64; // image size (in the canvas, png should be 200x200)
 var pX        = 0;
 var pY        = canvas.height - pDim;
 

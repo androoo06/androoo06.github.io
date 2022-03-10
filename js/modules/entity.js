@@ -1,22 +1,22 @@
+// didn't work as a private or public method of the class so I had to pull it out altogether.
+function drawBoundsBox(pX, pY, width, height) {
+    // leftBound, rightBound, bottomBound, topBound
+    return {
+        "left":    pX,
+        "right":  (pX + width),
+        "bottom": (pY + height),
+        "top":     pY
+    };
+}
+
 export class Entity {
-    constructor(width, height, x, y) {
-        this.pX        = x;
-        this.pY        = y;
+    constructor(x, y, width, height) {
         this.width     = width;
         this.height    = height;
+        this.pX        = x;
+        this.pY        = y;
 
-        drawBoundsBox();
-    }
-
-    // tried making private but didn't work (doesnt rly matter much either way in this case)
-    drawBoundsBox() {
-        // leftBound, rightBound, bottomBound, topBound
-        this.boundsBox = {
-            "left":    this.pX,
-            "right":  (this.pX + this.width),
-            "bottom": (this.pY + this.height),
-            "top":     this.pY
-        };
+        this.boundsBox = drawBoundsBox(x, y, width, height);
     }
 
     // return whether (x, y) is in object bounds (would cause overlap)
@@ -27,15 +27,15 @@ export class Entity {
 
     // change position to (newX, newY)
     shift(newX, newY) {
-        this.pX = newX;
-        this.pY = newY;
-        drawBoundsBox();
+        this.pX        = newX;
+        this.pY        = newY;
+        this.boundsBox = drawBoundsBox(newX, newY, this.width, this.height);
     }
 
     // change size to (width, height)
     resize(width, height) {
-        this.width  = width;
-        this.height = height;
-        drawBoundsBox();
+        this.width     = width;
+        this.height    = height;
+        this.boundsBox = drawBoundsBox(this.pX, this.pY, width, height);
     }
 }

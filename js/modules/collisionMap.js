@@ -6,12 +6,13 @@ import {Entity} from "./entity.js";
 var canvas  = document.getElementById("canvas");
 var ctx     = canvas.getContext("2d");
 
-var _screen = new Entity(canvas.width, canvas.height, 0, 0);
+var plrDim  = 64; // probably should be an import
+
+var _screen = new Entity(0, 0, (canvas.width - plrDim), canvas.height);
 
 var objs    = [];
 
 export function boundsCheck(x, y){
-    /*
     if (!_screen.isInBounds(x, y)){
         return false;
     }
@@ -20,7 +21,7 @@ export function boundsCheck(x, y){
         if (objs[i].isInBounds(x, y)){
             return false;
         }
-    }*/
+    }
 
     return true;
 }
