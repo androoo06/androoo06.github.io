@@ -36,7 +36,7 @@ function updateCanvas(){
 }
 
 function getNextSprite() {
-    if (jumpDir) return;
+    if (jumpDir != 0) return "sprites/Jump.png";
 
     var fullSrc     = player.src;
     var localSrcIdx = fullSrc.search("sprites/");
@@ -69,7 +69,7 @@ function move(event) {
         if (bound) {
             // maybe do something with bound (but prob not)
             pX = newX;
-            player.src = (jumpDir) ? player.src : ( (moveX_inc == 0) ? "sprites/Idle.png" : getNextSprite() ); // nested ternary; kinda gross (just saying to not change if jumping, and set to idle if moveInc is 0)
+            player.src = (jumpDir != 0) ? player.src : ( (moveX_inc == 0) ? "sprites/Idle.png" : getNextSprite() ); // nested ternary; kinda gross (just saying to not change if jumping, and set to idle if moveInc is 0)
             updateCanvas();
         } else {
             stopSprite(event);
@@ -95,12 +95,12 @@ function jump() {
 
         if (pY < (ogY - maxJump)){
             jumpDir = 1;
-            player.src = "sprites/Idle.png";
         }
 
         if (pY == ogY){
             clearInterval(interval);
             jumpDir = 0;
+            player.src = "sprites/Idle.png";
         }
     }, 20);
 }
@@ -137,7 +137,9 @@ export function stopSprite(event){
         clearInterval(interval);
         interval   = null;
 
-        player.src = "sprites/Idle.png";
+        if (jumpDir == 0){
+            player.src = "sprites/Idle.png";
+        }
         updateCanvas();
     }
 }
