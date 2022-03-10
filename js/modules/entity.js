@@ -5,7 +5,7 @@ export class Entity {
         this.width     = width;
         this.height    = height;
 
-        drawBoundsBox();
+        this.drawBoundsBox();
     }
 
     // private method to update this.boundsBox when properties are changed
@@ -24,13 +24,13 @@ export class Entity {
     shift(newX, newY) {
         this.pX = newX;
         this.pY = newY;
-        drawBoundsBox();
+        this.drawBoundsBox();
     }
 
     // change size to (width, height)
     resize(width, height) {
         this.width  = width;
         this.height = height;
-        drawBoundsBox();
+        this.drawBoundsBox();
     }
 }
