@@ -19,15 +19,15 @@ player.addEventListener("load", updateCanvas);
 // misc
 var dirs      = {
   "a": -1,
-  "d":  1
-  "ArrowRight": 1
+  "d":  1,
+  "ArrowRight": 1,
   "ArrowLeft": -1
 }
 var moving    = {};
 var interval  = null;
 var cycleDir  = 1;
 var jumpDir   = 0;
-var maxJump   = 50;
+var maxJump   = 50; // max jump height
 var moveX_inc = 0;
 
 function updateCanvas(){
@@ -69,7 +69,7 @@ function move(event) {
         if (bound) {
             // maybe do something with bound (but prob not)
             pX = newX;
-            player.src = (jumpDir) ? player.src : getNextSprite();
+            player.src = (jumpDir) ? player.src : ( (moveX_inc == 0) ? "sprites/Idle.png" : getNextSprite() ); // nested ternary; kinda gross (just saying to not change if jumping, and set to idle if moveInc is 0)
             updateCanvas();
         } else {
             stopSprite(event);
