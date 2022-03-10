@@ -1,7 +1,7 @@
 ////  Daily Entities  ////
 
 import {Entity} from "./entity.js";
-import {canvas} from "./spriteController.js";
+import {canvas} from "./constants.js";
 
 
 // canvas stuff [defined like this in all scripts thus far]
