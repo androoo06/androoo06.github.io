@@ -1,5 +1,5 @@
 // Collision Map
 
-export function a(){
-    return 1;
+export function boundsCheck(x, y){
+    return true;
 }

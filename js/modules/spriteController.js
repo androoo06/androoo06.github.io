@@ -3,33 +3,33 @@
 import * as MAP from "./collisionMap.js";
 
 var dirs      = {
-  "a": -1,
-  "d": 1
+  "a": [-1, 0],
+  "d": [1,  0]
 }
 
 var intervals = [];
 var ckd       = null; // current key down
 
-var pDim      = 64
+var pDim      = 64 // image size (in the canvas, png should be 200x200)
 
-var pLeft     = 0;
-var pTop      = 0;
+var pX        = 0;
+var pY        = 0;
 
-var duration  = 0; //useDuration for how long the current sprite player has been used
 var cycleDir  = 1;
-
-var leftWall  = 0;
-var rightWall = 1000;
 
 var canvas    = document.getElementById("canvas");
 var ctx       = canvas.getContext("2d");
 
-export var player = new Image(); //document.getElementById("$player$");
+export var player = new Image();
 player.src        = "sprites/Idle.png";
 
-player.addEventListener("load", function(){
-    ctx.drawImage(player, pLeft, pTop, pDim, pDim);
-});
+player.addEventListener("load", updateCanvas);
+
+function updateCanvas(){
+    //alert(pX+" "+pY);
+    canvas.width = canvas.width; // ngl idk what this does but it bugs without it
+    ctx.drawImage(player, pX, pY, pDim, pDim);
+}
 
 function getNextSprite() {
     var curr        = player.src;
@@ -47,35 +47,44 @@ function getNextSprite() {
 
         var newWalk  = (walkNum + cycleDir);
 
-        console.log(newWalk);
+        //console.log(newWalk);
 
         return "sprites/walk"+ (newWalk) +".jpg";
     }
 }
 
-export function moveSprite(event){
+export function moveSprite(event) {
     if (ckd) return;
     ckd = event.key;
 
     if (intervals.length > 0) return;
 
     var inc = dirs[ckd];
+
     if (!inc) {
         ckd = null;
         return;
     }
+    var incX = inc[0];
+    var incY = inc[1];
 
-    var m = setInterval(function () {
-        var _new = pLeft + (inc*2);
+    alert(incX + "x" + incY + ":" + pX + "x" + pY);
 
-        //if (boundsCheck(new)) then:
-            pLeft = _new;
-        //else: stopSprite(event);
+    var m = setInterval(function() {
+        var newX = pX + (incX*2);
+        var newY = pY + (incY*2);
 
-        canvas.width = canvas.width;
-        player.src   = getNextSprite();
-        ctx.drawImage(player, pLeft, pTop, pDim, pDim);
+        var a = boundsCheck(newX, newY);
+        alert(a);
+        if (a) {
+            pX = newX;
+            pY = newY;
 
+            player.src = getNextSprite();
+            updateCanvas();
+        } else {
+            stopSprite(event);
+        }
     }, 20);
 
     intervals.push(m);
@@ -83,11 +92,14 @@ export function moveSprite(event){
 
 export function stopSprite(event){
     if (event.key == ckd){
+        ckd = null;
+
         for (var i=intervals.length-1; i>-1; i--){
             clearInterval(intervals[i]);
             intervals.pop();
         }
-        ckd = null;
+
         player.src = "sprites/Idle.png";
+        updateCanvas();
     }
 }
