@@ -1,7 +1,7 @@
 ////  Sprite Controller  ////
 
 // imports
-import * as MAP from "./collisionMap.js";
+import {boundsCheck} from "./collisionMap.js";
 
 // canvas stuff
 var canvas    = document.getElementById("canvas");
@@ -26,9 +26,13 @@ var dirs      = {
 var moving    = {};
 var interval  = null;
 var cycleDir  = 1;
+var moveX_inc = 0;
+var jumps     = {
+    "up":  -1,
+    "down": 1
+}
 var jumpDir   = 0;
 var maxJump   = 50; // max jump height
-var moveX_inc = 0;
 
 function updateCanvas(){
     canvas.width = canvas.width; // ngl idk what this does but it bugs without it
@@ -64,7 +68,7 @@ function move(event) {
         console.log("moveX_inc:"+moveX_inc);
 
         var newX  = pX + moveX_inc;
-        var bound = MAP.boundsCheck(newX, pY);
+        var bound = boundsCheck(newX, pY);
 
         if (bound) {
             // maybe do something with bound (but prob not)
@@ -78,23 +82,23 @@ function move(event) {
 }
 
 function jump() {
-    jumpDir = -1; // negative is up, positive is down
+    jumpDir = jumps.up; // negative is up, positive is down
 
     player.src   = "sprites/Jump.png";
     var ogY      = pY;
     var interval = setInterval(function() {
         var newY = pY + (jumpDir*2);
 
-        var bound = MAP.boundsCheck(newY, pX);
+        var bound = boundsCheck(newY, pX);
         if (bound) {
             pY = newY;
             updateCanvas();
         } else {
-            jumpDir = (jumpDir == -1) ? 1 : 0;
+            jumpDir = (jumpDir == jumps.up) ? jumps.down : 0;
         }
 
         if (pY < (ogY - maxJump)){
-            jumpDir = 1;
+            jumpDir = jumps.down;
         }
 
         if (pY == ogY){
