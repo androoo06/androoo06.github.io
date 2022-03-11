@@ -39,7 +39,7 @@ export class Entity {
     }
 
     // draws the object on-screen (with the current canvas + context)
-    draw(){
+    draw(x) {
         console.log("calling draw for: " + this._Name);
 
         ctx.clearRect(this.pX, this.pY, this.width, this.height);
