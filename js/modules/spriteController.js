@@ -29,13 +29,7 @@ var maxJump   = 250; // max jump height
 
 function updateCanvas(){
     ctx.clearRect(prevX, prevY, pDim, pDim);
-    ctx.clearRect(player.pX, player.pY, pDim, pDim);
-
-    if (showBoxes) {
-        ctx.fillRect(player.pX, player.pY, pDim, pDim);
-    } else {
-        ctx.drawImage(player.Image, player.pX, player.pY, pDim, pDim);
-    }
+    player.draw();
 }
 
 function getNextSprite() {

@@ -42,8 +42,10 @@ export class Entity {
     draw(){
         console.log("calling draw for: " + this._Name);
         if (showBoxes){
+            ctx.clearRect(this.pX, this.pY, this.width, this.height);
             ctx.fillRect(this.pX, this.pY, this.width, this.height);
         } else {
+            ctx.clearRect(this.pX, this.pY, this.width, this.height);
             ctx.drawImage(this.Image, this.pX, this.pY, this.width, this.height);
         }
     }
