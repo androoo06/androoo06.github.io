@@ -40,6 +40,7 @@ export class Entity {
 
     // draws the object on-screen (with the current canvas + context)
     draw(){
+        console.log("calling draw for: " + this._Name);
         if (showBoxes){
             ctx.fillRect(this.pX, this.pY, this.width, this.height);
         } else {
