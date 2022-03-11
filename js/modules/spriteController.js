@@ -6,11 +6,8 @@ import {canvas, ctx, FILL_BOUNDING_BOXES as showBoxes} from "./constants.js";
 import {_entities as objs, player, plrDim as pDim} from "./dailyEntities.js";
 
 // player stuff
-var pX        = 0;
-var pY        = (canvas.height - pDim);
-
-var prevX     = pX;
-var prevY     = pY;
+var prevX     = player.pX;
+var prevY     = player.pY;
 
 // misc
 var dirs      = {
@@ -32,12 +29,12 @@ var maxJump   = 250; // max jump height
 
 function updateCanvas(){
     ctx.clearRect(prevX, prevY, pDim, pDim);
-    ctx.clearRect(pX, pY, pDim, pDim);
+    ctx.clearRect(player.pX, player.pY, pDim, pDim);
 
     if (showBoxes) {
-        ctx.fillRect(pX, pY, pDim, pDim);
+        ctx.fillRect(player.pX, player.pY, pDim, pDim);
     } else {
-        ctx.drawImage(player.Image, pX, pY, pDim, pDim);
+        ctx.drawImage(player.Image, player.pX, player.pY, pDim, pDim);
     }
 }
 
@@ -67,12 +64,12 @@ function move(event) {
     return setInterval(function() {
         //console.log("moveX_inc:"+moveX_inc);
 
-        var newX  = pX + moveX_inc;
-        var bound = boundsCheck(newX, pY, pDim, pDim);
+        var newX  = player.pX + moveX_inc;
+        var bound = boundsCheck(newX, player.pY, pDim, pDim);
 
         if (bound) {
-            prevX      = pX;
-            pX         = newX;
+            prevX            = player.pX;
+            player.pX        = newX;
             player.Image.src = (jumpDir != 0) ? player.Image.src : ( (moveX_inc == 0) ? "sprites/Idle.png" : getNextSprite() ); // nested ternary; kinda gross (just saying to not change if jumping, and set to idle if moveInc is 0)
 
             updateCanvas();
@@ -86,14 +83,14 @@ function jump() {
     jumpDir = jumps.up;
 
     player.Image.src = "sprites/Jump.png";
-    var ogY      = pY;
+    var ogY      = player.pY;
     var interval = setInterval(function() {
-        var newY = pY + (jumpDir*2);
+        var newY = player.pY + (jumpDir*2);
 
-        var bound = boundsCheck(newY, pX, pDim, pDim);
+        var bound = boundsCheck(newY, player.pX, pDim, pDim);
         if (bound) {
-            prevY = pY;
-            pY    = newY;
+            prevY     = player.pY;
+            player.pY = newY;
             updateCanvas();
         } else {
             jumpDir = (jumpDir == jumps.up) ? jumps.down : 0;
@@ -102,7 +99,7 @@ function jump() {
         if (jumpDir == 0){
             clearInterval(interval);
             player.Image.src = "sprites/Idle.png";
-        } else if (pY <= (ogY - maxJump)) {
+        } else if (player.pY <= (ogY - maxJump)) {
             jumpDir = jumps.down;
         }
 
