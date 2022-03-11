@@ -1,6 +1,6 @@
 ////  Entity Class  ////
 
-import {canvas, ctx} from "./constants.js";
+import {canvas, ctx, FILL_BOUNDING_BOXES as showBoxes} from "./constants.js";
 
 export function newBoundsBox(x, y, width, height){
     return {
@@ -39,8 +39,12 @@ export class Entity {
     }
 
     // draws the object on-screen (with the current canvas + context)
-    draw() {
-        ctx.drawImage(this.Image, this.pX, this.pY, this.width, this.height);
+    draw(){
+        if (showBoxes){
+            ctx.fillRect(this.pX, this.pY, this.width, this.height);
+        } else {
+            ctx.drawImage(this.Image, this.pX, this.pY, this.width, this.height);
+        }
     }
 
     // checks if the x and y are ENTIRELY inside of the boundsBox

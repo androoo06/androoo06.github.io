@@ -2,16 +2,15 @@
 
 // imports
 import {boundsCheck} from "./collisionMap.js";
-import {canvas, ctx, player, plrDim as pDim} from "./constants.js";
-import {_entities as objs} from "./dailyEntities.js";
+import {canvas, ctx} from "./constants.js";
+import {_entities as objs, player, plrDim as pDim} from "./dailyEntities.js";
 
 // player stuff
 var pX        = 0;
-var pY        = canvas.height - pDim;
+var pY        = (canvas.height - pDim);
 
 var prevX     = pX;
 var prevY     = pY;
-player.addEventListener("load", updateCanvas);
 
 // misc
 var dirs      = {
@@ -25,11 +24,11 @@ var interval  = null;
 var cycleDir  = 1;
 var moveX_inc = 0;
 var jumps     = {
-    "up":  -1,
+    "up":  -1, // negative is up, positive is down
     "down": 1
 }
 var jumpDir   = 0;
-var maxJump   = 50; // max jump height
+var maxJump   = 150; // max jump height
 
 function updateCanvas(){
     ctx.clearRect(prevX, prevY, pDim, pDim);
@@ -80,7 +79,7 @@ function move(event) {
 }
 
 function jump() {
-    jumpDir = jumps.up; // negative is up, positive is down
+    jumpDir = jumps.up;
 
     player.src   = "sprites/Jump.png";
     var ogY      = pY;
@@ -96,15 +95,13 @@ function jump() {
             jumpDir = (jumpDir == jumps.up) ? jumps.down : 0;
         }
 
-        if (pY <= (ogY - maxJump)){
+        if (jumpDir == 0){
+            clearInterval(interval);
+            player.src = "sprites/Idle.png";
+        } else if (pY <= (ogY - maxJump)) {
             jumpDir = jumps.down;
         }
 
-        if (jumpDir == 0){
-            clearInterval(interval);
-            jumpDir = 0;
-            player.src = "sprites/Idle.png";
-        }
     }, 20);
 }
 

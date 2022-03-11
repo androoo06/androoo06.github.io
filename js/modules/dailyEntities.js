@@ -2,19 +2,31 @@
 
 // imports
 import {Entity} from "./entity.js";
-import {canvas, plrDim} from "./constants.js";
+import {canvas} from "./constants.js";
+
+// player [always will be here]
+
+var _player = new Image();
+_player.src = "sprites/Idle.png";
+
+export var player = new Entity(0, (canvas.height - plrDim), plrDim, plrDim, "Player", _player);
+export var plrDim = 64; // png should be 200x200 or smaller (to be rendered non-pixely); actual render is 64x64
+
+player.addEventListener("load", function(){
+    _player.draw();
+});
 
 // daily entities [ syntax: new Entity(posX, posY, sizeX, sizeY); ]
 
 //-- bar --//
-var bar  = new Image();
-bar.src  = "entities/Bar.png";
+var _bar = new Image(50, 10);
+_bar.src = "entities/Bar.png";
 
-var _bar = new Entity(150, (canvas.height - 30), 50, 10, "Bar", bar);
-bar.addEventListener("load", function(){
-    _bar.draw();
+var bar = new Entity(150, (canvas.height - 80), 50, 10, "Bar", _bar);
+_bar.addEventListener("load", function(){
+    bar.draw();
 });
 
 // exports
 export var _screen   = new Entity(0, 0, canvas.width, canvas.height, "Screen");
-export var _entities = [_bar];
+export var _entities = [bar];
