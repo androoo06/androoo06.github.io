@@ -2,25 +2,7 @@
 
 import {canvas, ctx} from "./constants.js";
 
-function overlapping(b1, b2){
-    console.log(b1, b2);
-
-    // If one rectangle is on left side of other
-    if (b1.left > b2.right || b2.left > b1.right){
-        console.log("c1;"+(b1.left > b2.right)+"-"+(b2.left > b1.right));
-        return false;
-    }
-
-    // If one rectangle is above other
-    if (b1.bottom > b2.top || b2.bottom > b1.top){
-        console.log("c2;"+(b1.bottom > b2.top)+(b2.bottom > b1.top));
-        return false;
-    }
-
-    return true;
-}
-
-function newBoundsBox(x, y, width, height){
+export function newBoundsBox(x, y, width, height){
     return {
         "left":    x,
         "right":  (x + width),
@@ -61,12 +43,11 @@ export class Entity {
         ctx.drawImage(this.Image, this.pX, this.pY, this.width, this.height);
     }
 
-    // return whether (x, y) is in object bounds (would cause overlap)
-    isInBounds(x, y, sizeX, sizeY) {
-        var bb1 = this.boundsBox;
-        var bb2 = newBoundsBox(x, y, sizeX, sizeY);
-
-        return overlapping(bb1, bb2);
+    // checks if the x and y are ENTIRELY inside of the boundsBox
+    contains(x, y, sizeX, sizeY){
+        var bb = this.boundsBox;
+        return (x >= bb.left) && (x <= bb.right) && (y <= bb.bottom) && (y >= bb.top)
+            && (x+sizeX <= bb.right) && (y+sizeY <= bb.bottom);
     }
 
     // change position to (newX, newY)

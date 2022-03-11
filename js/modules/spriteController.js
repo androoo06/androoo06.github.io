@@ -55,9 +55,7 @@ function getNextSprite() {
         cycleDir = (walkNum == 3) ? -1 : cycleDir;
 
         var newWalk  = (walkNum + cycleDir);
-
         //console.log(newWalk);
-
         return "sprites/walk"+ (newWalk) +".jpg";
     }
 }
@@ -70,9 +68,10 @@ function move(event) {
         var bound = boundsCheck(newX, pY, pDim, pDim);
 
         if (bound) {
-            prevX = pX;
-            pX    = newX;
+            prevX      = pX;
+            pX         = newX;
             player.src = (jumpDir != 0) ? player.src : ( (moveX_inc == 0) ? "sprites/Idle.png" : getNextSprite() ); // nested ternary; kinda gross (just saying to not change if jumping, and set to idle if moveInc is 0)
+
             updateCanvas();
         } else {
             stopSprite(event);
@@ -97,7 +96,7 @@ function jump() {
             jumpDir = (jumpDir == jumps.up) ? jumps.down : 0;
         }
 
-        if (pY < (ogY - maxJump)){
+        if (pY <= (ogY - maxJump)){
             jumpDir = jumps.down;
         }
 
