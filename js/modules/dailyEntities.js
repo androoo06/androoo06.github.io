@@ -5,6 +5,7 @@ import {Entity} from "./entity.js";
 import {canvas} from "./constants.js";
 
 function _load(element){
+    console.log(element);
     element.draw();
     //element.removeEventListener("load", _load, element);
 }
