@@ -4,7 +4,7 @@
 import {Entity} from "./entity.js";
 import {canvas} from "./constants.js";
 
-// template for entities
+// template for entities [WITH images] ** entities without images (sole collision boxes) should be made directly with the Entity constructor
 function _setup(name, src, posX, posY, sizeX, sizeY){
     var _element = new Image();
     _element.src = src;
@@ -26,7 +26,7 @@ export var player = _setup("Player", "sprites/Idle.png", 0, (canvas.height - plr
 // daily entities [ syntax: _setup(name, src, posX, posY, sizeX, sizeY); ]
 ///// ------------------------------------------------------------------------------------------------------------------ /////
 
-var bar = _setup("Bar", "entities/Bar.png", 0, (canvas.height - 200), 50, 10);
+var bar = _setup("Bar", "entities/Bar.png", 150, (canvas.height - 50), 50, 10);
 
 
 ///// ------------------------------------------------------------------------------------------------------------------ /////

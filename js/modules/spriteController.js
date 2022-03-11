@@ -81,7 +81,7 @@ function jump() {
     var interval = setInterval(function() {
         var newY = player.pY + (jumpDir*2);
 
-        var bound = boundsCheck(newY, player.pX, pDim, pDim);
+        var bound = boundsCheck(player.pX, newY, pDim, pDim);
         if (bound) {
             prevY     = player.pY;
             player.pY = newY;

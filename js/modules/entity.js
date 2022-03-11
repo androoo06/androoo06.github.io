@@ -5,9 +5,9 @@ import {canvas, ctx, FILL_BOUNDING_BOXES as showBoxes} from "./constants.js";
 export function newBoundsBox(x, y, width, height){
     return {
         "left":    x,
+        "top":     y,
         "right":  (x + width),
-        "bottom": (y + height),
-        "top":     y
+        "bottom": (y + height)
     };
 }
 
@@ -23,10 +23,12 @@ function drawBoundsBox(entity, onlyBB) {
 
 export class Entity {
     constructor(x, y, width, height, name, image) {
-        this.width     = width;
-        this.height    = height;
         this.pX        = x;
         this.pY        = y;
+
+        this.width     = width;
+        this.height    = height;
+
         this._Name     = name;
 
         if (image) {
