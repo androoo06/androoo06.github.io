@@ -13,6 +13,7 @@ export var plrDim = 64; // png should be 200x200 or smaller (to be rendered non-
 export var player = new Entity(0, (canvas.height - plrDim), plrDim, plrDim, "Player", _player);
 
 _player.addEventListener("load", function(){
+    console.log("ttt");
     player.draw();
 });
 

@@ -14,7 +14,7 @@ export function newBoundsBox(x, y, width, height){
 // didn't work as a private or public method of the class so I had to pull it out altogether.
 function drawBoundsBox(entity, onlyBB) {
     // leftBound, rightBound, bottomBound, topBound
-    if (!onlyBB && entity.Image){
+    if ((!onlyBB) && (entity.Image == null)){
         entity.draw();
     }
 
