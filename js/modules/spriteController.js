@@ -25,10 +25,10 @@ var jumps     = {
     "down": 1
 }
 var jumpDir   = 0;
-var maxJump   = 250; // max jump height [should be around sprite size, maybe more (like 125-150)]
+var maxJump   = 85; // max jump height [should be around sprite size, maybe more (like 125-150)]
 
 function updateCanvas(){
-    ctx.clearRect(prevX, prevY, pDim, pDim);
+    ctx.clearRect(prevX, prevY, pDim.x, pDim.y);
     player.draw();
 }
 
@@ -59,14 +59,14 @@ function move(event) {
         //console.log("moveX_inc:"+moveX_inc);
 
         var newX  = player.pX + moveX_inc;
-        var bound = boundsCheck(newX, player.pY, pDim, pDim);
+        var bound = boundsCheck(newX, player.pY, pDim.x, pDim.y);
 
         if (bound) {
             prevX            = player.pX;
             player.pX        = newX;
 
             // if won't collide with anything below it [and not jumping]:
-            if (boundsCheck(newX, player.pY+2, pDim, pDim) && (jumpDir==0)){
+            if (boundsCheck(newX, player.pY+2, pDim.x, pDim.y) && (jumpDir==0)){
                 jump(jumps.down); // gravity effect
             }
 
@@ -86,8 +86,8 @@ function jump(override) {
     var ogY      = player.pY;
     var interval = setInterval(function() {
         var newY = player.pY + (jumpDir*2);
+        var bound = boundsCheck(player.pX, newY, pDim.x, pDim.y);
 
-        var bound = boundsCheck(player.pX, newY, pDim, pDim);
         if (bound) {
             prevY     = player.pY;
             player.pY = newY;

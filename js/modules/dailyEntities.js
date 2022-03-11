@@ -20,8 +20,8 @@ function _setup(name, src, posX, posY, sizeX, sizeY){
 }
 
 // player [always will be here]
-export var plrDim = 64; // png should be 200x200 or smaller (to be rendered non-pixely); actual render is 64x64
-export var player = _setup("Player", "sprites/Idle.png", 0, (canvas.height - plrDim), plrDim, plrDim);
+export var plrDim = {"x": 64, "y":64};
+export var player = _setup("Player", "sprites/Idle.png", 0, (canvas.height - plrDim.y), plrDim.x, plrDim.y);
 
 // daily entities [ syntax: _setup(name, src, posX, posY, sizeX, sizeY); ]
 ///// ------------------------------------------------------------------------------------------------------------------ /////
@@ -33,4 +33,4 @@ var bar = _setup("Bar", "entities/Bar.png", 150, (canvas.height - 50), 50, 10);
 
 // exports
 export var _screen   = new Entity(0, 0, canvas.width, canvas.height, "Screen");
-export var _entities = [bar];
+export var _entities = [bar]; // these entities are [COLLIDABLE], and have images
