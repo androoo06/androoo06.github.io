@@ -9,11 +9,11 @@ import {canvas} from "./constants.js";
 var _player = new Image();
 _player.src = "sprites/Idle.png";
 
-export var player = new Entity(0, (canvas.height - plrDim), plrDim, plrDim, "Player", _player);
 export var plrDim = 64; // png should be 200x200 or smaller (to be rendered non-pixely); actual render is 64x64
+export var player = new Entity(0, (canvas.height - plrDim), plrDim, plrDim, "Player", _player);
 
-player.addEventListener("load", function(){
-    _player.draw();
+_player.addEventListener("load", function(){
+    player.draw();
 });
 
 // daily entities [ syntax: new Entity(posX, posY, sizeX, sizeY); ]
@@ -22,7 +22,7 @@ player.addEventListener("load", function(){
 var _bar = new Image(50, 10);
 _bar.src = "entities/Bar.png";
 
-var bar = new Entity(150, (canvas.height - 80), 50, 10, "Bar", _bar);
+var bar = new Entity(0, (canvas.height - 200), 50, 10, "Bar", _bar);
 _bar.addEventListener("load", function(){
     bar.draw();
 });

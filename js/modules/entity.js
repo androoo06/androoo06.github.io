@@ -50,8 +50,23 @@ export class Entity {
     // checks if the x and y are ENTIRELY inside of the boundsBox
     contains(x, y, sizeX, sizeY){
         var bb = this.boundsBox;
-        return (x >= bb.left) && (x <= bb.right) && (y <= bb.bottom) && (y >= bb.top)
-            && (x+sizeX <= bb.right) && (y+sizeY <= bb.bottom);
+
+        // if not in the horizontal containment
+        if ((x < bb.left) || (x > bb.right)){
+            return false;
+        }
+
+        // if not in the vertical containment
+        if ((y > bb.bottom) || (y < bb.top)){
+            return false;
+        }
+
+        // if it extends outside of the borders [only need to check these since images are all drawn the same]
+        if((x+sizeX > bb.right) || (y+sizeY > bb.bottom)){
+            return false;
+        }
+
+        return true;
     }
 
     // change position to (newX, newY)

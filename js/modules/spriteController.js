@@ -2,7 +2,7 @@
 
 // imports
 import {boundsCheck} from "./collisionMap.js";
-import {canvas, ctx} from "./constants.js";
+import {canvas, ctx, FILL_BOUNDING_BOXES as showBoxes} from "./constants.js";
 import {_entities as objs, player, plrDim as pDim} from "./dailyEntities.js";
 
 // player stuff
@@ -28,19 +28,23 @@ var jumps     = {
     "down": 1
 }
 var jumpDir   = 0;
-var maxJump   = 150; // max jump height
+var maxJump   = 250; // max jump height
 
 function updateCanvas(){
     ctx.clearRect(prevX, prevY, pDim, pDim);
     ctx.clearRect(pX, pY, pDim, pDim);
 
-    ctx.drawImage(player, pX, pY, pDim, pDim);
+    if (showBoxes) {
+        ctx.fillRect(pX, pY, pDim, pDim);
+    } else {
+        ctx.drawImage(player.Image, pX, pY, pDim, pDim);
+    }
 }
 
 function getNextSprite() {
     if (jumpDir != 0) return "sprites/Jump.png";
 
-    var fullSrc     = player.src;
+    var fullSrc     = player.Image.src;
     var localSrcIdx = fullSrc.search("sprites/");
     var localSrc    = fullSrc.substring(localSrcIdx);
 
@@ -69,7 +73,7 @@ function move(event) {
         if (bound) {
             prevX      = pX;
             pX         = newX;
-            player.src = (jumpDir != 0) ? player.src : ( (moveX_inc == 0) ? "sprites/Idle.png" : getNextSprite() ); // nested ternary; kinda gross (just saying to not change if jumping, and set to idle if moveInc is 0)
+            player.Image.src = (jumpDir != 0) ? player.Image.src : ( (moveX_inc == 0) ? "sprites/Idle.png" : getNextSprite() ); // nested ternary; kinda gross (just saying to not change if jumping, and set to idle if moveInc is 0)
 
             updateCanvas();
         } else {
@@ -81,7 +85,7 @@ function move(event) {
 function jump() {
     jumpDir = jumps.up;
 
-    player.src   = "sprites/Jump.png";
+    player.Image.src = "sprites/Jump.png";
     var ogY      = pY;
     var interval = setInterval(function() {
         var newY = pY + (jumpDir*2);
@@ -97,12 +101,12 @@ function jump() {
 
         if (jumpDir == 0){
             clearInterval(interval);
-            player.src = "sprites/Idle.png";
+            player.Image.src = "sprites/Idle.png";
         } else if (pY <= (ogY - maxJump)) {
             jumpDir = jumps.down;
         }
 
-    }, 20);
+    }, 15);
 }
 
 export function moveSprite(event) {
@@ -138,7 +142,7 @@ export function stopSprite(event){
         interval   = null;
 
         if (jumpDir == 0){
-            player.src = "sprites/Idle.png";
+            player.Image.src = "sprites/Idle.png";
         }
         updateCanvas();
     }
