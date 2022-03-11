@@ -64,6 +64,12 @@ function move(event) {
         if (bound) {
             prevX            = player.pX;
             player.pX        = newX;
+
+            // if won't collide with anything below it [and not jumping]:
+            if (boundsCheck(newX, player.pY+2, pDim, pDim) && (jumpDir==0)){
+                jump(jumps.down); // gravity effect
+            }
+
             player.Image.src = (jumpDir != 0) ? player.Image.src : ( (moveX_inc == 0) ? "sprites/Idle.png" : getNextSprite() ); // nested ternary; kinda gross (just saying to not change if jumping, and set to idle if moveInc is 0)
 
             updateCanvas();
@@ -73,8 +79,8 @@ function move(event) {
     }, 15);
 }
 
-function jump() {
-    jumpDir = jumps.up;
+function jump(override) {
+    jumpDir = override || jumps.up;
 
     player.Image.src = "sprites/Jump.png";
     var ogY      = player.pY;
