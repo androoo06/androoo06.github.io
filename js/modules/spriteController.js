@@ -25,7 +25,7 @@ var jumps     = {
     "down": 1
 }
 var jumpDir   = 0;
-var maxJump   = 250; // max jump height
+var maxJump   = 250; // max jump height [should be around sprite size, maybe more (like 125-150)]
 
 function updateCanvas(){
     ctx.clearRect(prevX, prevY, pDim, pDim);

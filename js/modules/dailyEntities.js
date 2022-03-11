@@ -4,33 +4,27 @@
 import {Entity} from "./entity.js";
 import {canvas} from "./constants.js";
 
-function _load(element){
-    element.draw();
+// template for entities
+function setup(name, src, posX, posY, sizeX, sizeY){
+    var _element = new Image();
+    _element.src = src;
+
+    var element = new Entity(posX, posY, sizeX, sizeY, name, _element);
+    _element.addEventListener("load", element.draw);
+
+    return element;
 }
 
 // player [always will be here]
-var _player = new Image();
-_player.src = "sprites/Idle.png";
-
+export var player = setup("Player", "sprites/Idle.png", 0, (canvas.height - plrDim), plrDim, plrDim);
 export var plrDim = 64; // png should be 200x200 or smaller (to be rendered non-pixely); actual render is 64x64
-export var player = new Entity(0, (canvas.height - plrDim), plrDim, plrDim, "Player", _player);
 
-_player.addEventListener("load", function() {
-    _load(player);
-});
 
-// daily entities [ syntax: new Entity(posX, posY, sizeX, sizeY, name, imageObject); ]
+// daily entities [ syntax: setup(name, src, posX, posY, sizeX, sizeY); ]
 ///// ------------------------------------------------------------------------------------------------------------------ /////
 
-//-- bar --//
-var _bar = new Image(50, 10);
-_bar.src = "entities/Bar.png";
+var bar = setup("Bar", "entities/Bar.png", 0, (canvas.height - 200), 50, 10);
 
-var bar = new Entity(0, (canvas.height - 200), 50, 10, "Bar", _bar);
-_bar.addEventListener("load", function() {
-    _load(bar);
-});
-// -- /// --//
 
 ///// ------------------------------------------------------------------------------------------------------------------ /////
 
